@@ -1,9 +1,10 @@
 import {Stock} from './stock';
 
-class Product implements Stock{
-  constructor (private productName:string, private productType:string, private productPrice:number, private productQuantity:number){
-
-  }
+export class Product implements Stock{
+  constructor (private productName:string,
+              private productType:string,
+              private productPrice:number,
+              private productQuantity:number){}
 
   set name(name:string){
     this.productName = name;
@@ -37,16 +38,8 @@ class Product implements Stock{
     console.log(`###Product description###
       Name: ${this.name}
       Type: ${this.type}
-      Price: ${this.price.toString()} euro;
-      Quantity: ${this.quantity.toString()} units;
+      Price: ${this.price} euro
+      Quantity: ${this.quantity} units
       In Stock: ${this.checkStock(this.quantity)}`);
   }
 }
-
-const notebook = new Product("Notebook", "Supplies", 5, 20);
-const pencil = new Product("Pencil", "Supplies", 2, 0);
-const tv = new Product("TV", "Electronics", 1200, 30);
-
-notebook.show();
-pencil.show();
-tv.show();
