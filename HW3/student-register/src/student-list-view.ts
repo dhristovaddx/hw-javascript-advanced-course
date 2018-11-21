@@ -1,34 +1,22 @@
-import {StudentCollection} from './student-collection';
-import {StudentView} from './student-view';
+import StudentCollection from './student-collection';
+import StudentView from './student-view';
+import Student from './student-model';
 
-export class studentViewCollection extends StudentCollection{
-    private studentsArr:StudentCollection[];
-    private student:StudentView;
-    constructor(private el$){
-      super();
-      this.studentsArr = [];
+export default class StudentViewCollection{
+    private students:StudentCollection;
+    private el$:any;
+
+    constructor(el$, students:Student[]){
+      this.students = new StudentCollection();
+      this.students.add(students);
+      this.el$ = el$;
     }
 
-    render(st):void{
-        this.student = st;
-        this.studentsArr.push(st);
+    render():void{
+      let list$ = this.students.getStudents().map((student)=>{
+        return (new StudentView(student)).render();
+      }).join('');
+      this.el$.innerHTML = `<ul class="list-group">${list$}</ul>`;
     };
-
-    show():void {
-      const list$ = this.studentsArr.map( (student)=>{
-            return `<ul class="list-group">${this.student.render()}</ul>`;
-        });
-        this.el$.innerHTML = list$;
-    }
-
-    // ~~~second try~~~
-    // show():void{
-    //   this.studentsArr.forEach((student$) => {
-    //     let ul$ = document.createElement('ul');
-    //     ul$.setAttribute("class", "list-group");
-    //     ul$.innerHTML = this.student.render();
-    //     this.el$ = document.getElementById('students').appendChild(ul$);
-    //   });
-    // }
 
 };

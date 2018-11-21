@@ -1,33 +1,40 @@
-export class Student {
+export default class Student {
   constructor(
-      private facNo:number,
-      private fName:string,
-      private lName:string,
-      private status:boolean
+      private _studentId:number,
+      private _firstName:string,
+      private _lastName:string,
+      private _status:boolean
   ) {}
 
-  set setFacNo(facNo:number) {
-    this.facNo = facNo;
+  set studentId(studentId:number){
+    this._studentId = studentId;
   }
-  set setFirstName(fName:string){
-    this.fName = fName;
+  
+  set firstName(firstName:string){
+    this._firstName = firstName;
   }
-  set setLastName(lName:string){
-    this.lName = lName;
+
+  set lastName(lastName:string){
+    this._lastName = lastName;
   }
-  set setStatus(status:boolean){
-    this.status = status;
+
+  set status(status:boolean){
+    this._status = status;
   }
-  get getFacNO(){
-    return this.facNo;
+
+  get studentId(){
+    return this.studentId;
   }
-  get getFirstName(){
-    return this.fName;
+
+  get firstName(){
+    return this.firstName;
   }
-  get getLastName(){
-    return this.lName;
+
+  get lastName(){
+    return this.lastName;
   }
-  get getStatus(){
+
+  get status(){
     return this.status;
   }
 }

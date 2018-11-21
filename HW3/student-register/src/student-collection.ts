@@ -1,21 +1,23 @@
-import {Student} from "./student-model";
+import Student from "./student-model";
 
-export class StudentCollection {
+export default class StudentCollection {
   private students:Student[];
 
   constructor(){
     this.students = [];
   }
 
-  add(el:Student):void{
-    this.students.push(el);
+  add(els:Student[]):void{
+    els.map((student)=> {
+      this.students.push(student);
+    });
   }
 
   remove(el:Student):void{
     this.students = this.students.filter((student) => student !== el);
   }
 
-  get(){
+  getStudents(){
     return this.students;
   }
 }
