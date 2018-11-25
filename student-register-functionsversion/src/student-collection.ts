@@ -3,7 +3,7 @@ import StudentModel from "./student-model";
 const studentCollection = (...studentArr:string[])=>{
 
     let collection:object[] = studentArr.map( (name, index)=>{
-        return StudentModel( index, name);
+        return StudentModel( index+1, name);
     });
 
     const get = ():object[] => {

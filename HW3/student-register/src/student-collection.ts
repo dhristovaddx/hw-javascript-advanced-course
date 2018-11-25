@@ -20,4 +20,15 @@ export default class StudentCollection {
   getStudents(){
     return this.students;
   }
+
+  getStudentById (studentId:number):Student {
+        let student:Student;
+        this.students.forEach((s)=>{
+            if( student.studentId === studentId){
+                student = s;
+            }
+        });
+
+        return student;
+    };
 }

@@ -6,11 +6,13 @@ namespace app {
 
   export const init = ():void => {
     console.log("Hello Student Register");
+
+
     const students = new StudentCollection();
     const s:Student[]= [
-                new Student(15114059, "John", "Doe", true ),
-                new Student(15114039, "Anna", "Smith", true),
-                new Student(15114052, "Betty", "Cooper", false)
+                new Student(1, "John", "Doe", true ),
+                new Student(2, "Anna", "Smith", true),
+                new Student(3, "Betty", "Cooper", false)
               ];
 
     students.add(s);
@@ -19,7 +21,6 @@ namespace app {
 
     const studentListView = new StudentViewCollection(students$, s);
     studentListView.render();
-
 
   }
 }

@@ -9,7 +9,7 @@ export default class Student {
   set studentId(studentId:number){
     this._studentId = studentId;
   }
-  
+
   set firstName(firstName:string){
     this._firstName = firstName;
   }
@@ -23,18 +23,18 @@ export default class Student {
   }
 
   get studentId(){
-    return this.studentId;
+    return this._studentId;
   }
 
   get firstName(){
-    return this.firstName;
+    return this._firstName;
   }
 
   get lastName(){
-    return this.lastName;
+    return this._lastName;
   }
 
   get status(){
-    return this.status;
+    return this._status;
   }
 }

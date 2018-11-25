@@ -7,7 +7,7 @@ const studentViewCollection = (el$, ...students:string[]) => {
 
   const render = ():void =>{
       const list$ = studentCollection.get().map( (student)=>{
-          return `<tr class="row-student">${StudentView(student).render()}</tr>`;
+          return StudentView(student).render();
       }).join('');
       el$.innerHTML = `<tr id="main">
                           <th>ID</th>
@@ -26,6 +26,7 @@ const studentViewCollection = (el$, ...students:string[]) => {
           const id = parseInt(student$.getAttribute('data-id'));
           const checkbox$ = student$.querySelector('.toggleStatus');
           const removeButton$ = student$.querySelector('.remove');
+          
 
           checkbox$.addEventListener('click', ()=>{
               console.log("id:", id);

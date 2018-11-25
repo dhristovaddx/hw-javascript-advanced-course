@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Compound Interest Calculator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.5.5/Rx.min.js"></script>
+</head>
+<body>
+    <h1>Compound Interest Calculator</h1>
+    <div>
+      <p>Calculate compound interest on an investment or savings to see how much money you will have after a specific amount of time and depending on the interest rate and number of times it is compounded per year.</p>
+      <p>Formula: FV = PV(1 + r/n)^nt</p>
+      <ul>
+        <li>FV = the future value of the investment/loan, including interest</li>
+        <li>PV = the principal investment amount (the initial deposit or loan amount)</li>
+        <li>r = the annual interest rate (decimal)</li>
+        <li>n = the number of times that interest is compounded per year</li>
+        <li>t = the number of years the money is invested or borrowed for</li>
+      </ul>
+    </div>
+    <div>
+      <div>Present Value ($)</div>
+      <input type="text" id="pv-input">
+      <div>Interest Rate: <span id=ir-value>5</span>%</div>
+      <input type="range" id="ir-input" min="1" max="10">
+      <div>Term(years): <span id=term-value>10</span></div>
+      <input type="range" id="term-input" min="1" max="20">
+      <div>Compounding periods per year: <span id=cppy-value>12</span></div>
+      <input type="range" id="cppy-input" min="1" max="12">
+      <br>
+      <div>Future Value ($): <span id="fv"></span></div>
+
+    </div>
+    <script>
+        const pvInput = document.querySelector('#pv-input');
+        const irInput = document.querySelector('#ir-input');
+        const termInput = document.querySelector('#term-input');
+        const cppyInput = document.querySelector('#cppy-input');
+
+        const irValue = document.querySelector('#ir-value');
+        const termValue = document.querySelector('#term-value');
+        const cppyValue = document.querySelector('#cppy-value');
+        const fv = document.querySelector('#fv');
+
+
+        const ir = Rx.Observable
+                              .fromEvent(irInput,'input')
+                              .map((event) => parseInt(event.target.value))
+                              .startWith(parseInt(irInput.value));
+
+
+        const term = Rx.Observable
+                              .fromEvent(termInput,'input')
+                              .map((event) => parseInt(event.target.value))
+                              .startWith(parseInt(termInput.value));
+
+
+        const cppy = Rx.Observable
+                              .fromEvent(cppyInput,'input')
+                              .map((event) => parseInt(event.target.value))
+                              .startWith(parseInt(cppyInput.value));
+
+        const calculateFV = Rx.Observable
+                              .combineLatest(ir, term, cppy, (i, t, c) => {
+
+                                  return (pvInput.value*(1 + (i/100)/c) ** (c*t)).toFixed(2);
+                              })
+
+        calculateFV.subscribe((value) => fv.innerHTML = value);
+        ir.subscribe((value) => irValue.innerHTML = value);
+        term.subscribe((value) => termValue.innerHTML = value);
+        cppy.subscribe((value) => cppyValue.innerHTML = value);
+
+    </script>
+</body>
+</html>

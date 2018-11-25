@@ -3,15 +3,13 @@ export default class StudentView{
   constructor(private student:Student){}
 
   render() {
-      return `<li class="list-group-item" data-facNo=${this.student.studentId}>
-               ${this.student.studentId}
-               ${this.student.firstName}
-               ${this.student.lastName}
-               <input type="checkbox"
-                      class="toggleStatus"
-                      ${this.student.status?"checked":""}/>
-               <button class="remove text-danger">&times;</button>
-             </li>`;
+      return `<tr class="row-student" data-id=${this.student.studentId}>
+                  <td>${this.student.studentId}</td>
+                  <td>${this.student.firstName}</td>
+                  <td>${this.student.lastName}</td>
+                  <td><input type="checkbox" class="toggleStatus" ${this.student.status?"checked":""}/>${this.student.status? "Not active":"Active"}</td>
+                  <td><button class="remove close text-danger">&times;</button></td>
+                </tr>`;
   };
 
 }
