@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+   <div class="container-fluid">
+       <div class="row">
+           <div class="col-sm-12">
+               <h1>Book search</h1>
+               <div class="form-group">
+                   <label for="search-box">ISBN:</label>
+                   <input type="text" id="search-box" class="form-control">
+               </div>
+           </div>
+           <div class="col-sm-12">
+               <ul id="list" class="list-group"></ul>
+           </div>
+       </div> <!-- ROW -->
+   </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.3.3/rxjs.umd.min.js"></script>
+<script>
+   const {fromEvent, from } = rxjs;
+   const {map,filter,flatMap} = rxjs.operators;
+
+   const sbox$ = document.querySelector('#search-box');
+   const list$ = document.querySelector('#list');
+
+    const keyUp =  fromEvent(sbox$,'keyup')
+                     .pipe(
+                        map((event)=>event.target.value) ,
+                        filter((isbn)=>isbn.trim().length >= 2)
+                     );
+
+    const render = (books)=>{
+        list$.innerHTML = '';
+        console.log(books);
+        let items = [];
+        for( let book of Object.keys(books)){
+
+            let li$ = `<li class="list-group-item">
+                        <h2>${book.Title}</h2>
+                        <img src="${book.CoverThumb}"
+                             alt="${book.Title}"
+                             class="img-responsive img-thumbnail"/>
+                       </li>`;
+            console.log(li$);
+            items.push(li$)
+        }//for
+            list$.innerHTML = items.join('');
+    };
+
+    keyUp.pipe(
+            flatMap((isbn)=>{
+
+                    return from(
+                            fetch(`https://www.booknomads.com/api/v0/isbn/${isbn}`)
+                            .then(response=>response.json())
+                        );//from
+            })
+    ) //pipe
+    .subscribe(value=>{
+        render(value);
+    });
+
+</script>
+</body>
+</html>
