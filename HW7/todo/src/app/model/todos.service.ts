@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'
+
+import {TodoItem} from './todo-item';
+
+import { Observable } from 'rxjs';
+import { ConvertActionBindingResult } from '@angular/compiler/src/compiler_util/expression_converter';
+
+const URL:string = 'http://localhost:3000';
+@Injectable({
+  providedIn: 'root'
+})
+export class TodosService {
+
+  constructor(private http:HttpClient) { }
+
+  getTodoItems():Observable<TodoItem[]>{
+    return this.http.get<TodoItem[]>(`${URL}/list`);
+  }
+
+  addNewTodo(item:TodoItem):Observable<TodoItem>{
+    if (item._id === undefined) {
+      return this.http.post<TodoItem>(`${URL}/list`, item);
+    }
+  }
+
+  removeItem(id:string):Observable<any>{
+    return this.http.delete<TodoItem>(`${URL}/list/${id}`);
+  }
+
+  toggleCompleted(item:TodoItem):Observable<TodoItem>{ 
+      return this.http.put<TodoItem>(`${URL}/list/${item._id}`, item);
+  }
+
+}

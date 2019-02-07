@@ -1,0 +1,26 @@
+<a routerLink="/list"
+   class="btn btn-info"
+   >
+   Back
+</a>
+<button class="btn btn-danger">Clear</button>
+
+<ul class="list-group m-2">
+  <li *ngFor="let item of items" class="list-group-item">
+      <span
+            [ngClass]="item.completed? 'del':''">
+            {{item.title}}
+      </span>
+      <span class="badge badge-success ml-2">
+          Archived
+      </span>
+      <button class="close btn btn-success ml-2"
+             (click)="toggleCompleted(item)">
+             Restore
+      </button>
+      <button class="close text-danger"
+              (click)="removeItem(item._id)">
+        &times;
+      </button>  
+  </li>
+</ul>
